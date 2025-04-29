@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
     <title>Library</title>
 </head>
 <body>
+    <div class="header grey-bck"></div>
+    <div class="sidebar"></div>
+    <div class="main teal-bck">
+        <!-- Cards with book info will be apended here using JS -->
+    </div>
+    <div class="footer grey-bck"></div>
+    
     <script>
         const myLibrary = [];
 
@@ -23,14 +31,25 @@
             }
         }
 
-        function addBooktoLibrary(title, author, pages, read) {
+        // Should I define this stuff on the Book prototype to save memory?
+
+        function addToLibrary(title, author, pages, read) {
             let bookObj = new Book(title, author, pages, read);
             myLibrary.push(bookObj);
         }
 
-        addBooktoLibrary('The Hobbit', 'J.R.R Tolkien', 295, 'not read yet');
-        addBooktoLibrary('CrowBro', 'Caw Caw', 100, 'already read');
+        addToLibrary('The Hobbit', 'J.R.R Tolkien', 295, 'not read yet');
+        addToLibrary('CrowBro', 'Caw Caw', 100, 'already read');
         console.log(myLibrary);
+
+        myLibrary.forEach((book) => {
+            const main = document.querySelector(".main");
+
+            const card = document.createElement('div');
+            card.classList.add("card");
+            card.textContent = book.info();
+            main.appendChild(card);
+        });
 
     </script>
 </body>

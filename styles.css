@@ -1,0 +1,40 @@
+:root {
+    --system-font-stack: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+body {
+    font-family: var(--system-font-stack);
+    /* font-size: 1rem; */
+    height: 100vh;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr 16fr 1fr;
+}
+
+.grey-bck {
+    background-color: grey;
+}
+
+.teal-bck {
+    background-color: teal;
+}
+
+.header, 
+.footer {
+    grid-column: 1 / -1;
+}
+
+.main {
+    display: grid;
+    padding: 2rem;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    
+}
+
+.card {
+    background-color: white;
+    padding: 1.25rem;
+    border-radius: 1rem;
+}
