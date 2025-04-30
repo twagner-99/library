@@ -8,11 +8,18 @@
 </head>
 <body>
     <div class="header grey-bck"></div>
-    <div class="sidebar"></div>
+    <div class="sidebar">
+        <button id="openDia">Add Book to Library</button>
+    </div>
     <div class="main teal-bck">
         <!-- Cards with book info will be apended here using JS -->
     </div>
     <div class="footer grey-bck"></div>
+
+    <dialog>
+        <p>Hey hey hey</p>
+        <button id="closeDia">Close</button>
+    </dialog>
     
     <script>
         const myLibrary = [];
@@ -51,6 +58,14 @@
             main.appendChild(card);
         });
 
+        const dialog = document.querySelector('dialog');
+        const openDiaBtn = document.querySelector('#openDia');
+        const closeDiaBtn = document.querySelector('#closeDia');
+
+        openDiaBtn.addEventListener("click", () => {
+            dialog.showModal();
+        });
+        
     </script>
 </body>
 </html>
