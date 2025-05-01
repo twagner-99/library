@@ -9,7 +9,7 @@
 <body>
     <div class="header grey-bck"></div>
     <div class="sidebar">
-        <button id="openDia">Add Book to Library</button>
+        <button id="addBtn">Add Book to Library</button>
     </div>
     <div class="main teal-bck">
         <!-- Cards with book info will be apended here using JS -->
@@ -17,10 +17,36 @@
     <div class="footer grey-bck"></div>
 
     <dialog>
-        <p>Hey hey hey</p>
-        <button id="closeDia">Close</button>
+        <form action=""> <!-- action=? method=dialog?? -->
+            <p>Please fill out the following information to add a book to your library.</p>
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" id="title"> <!-- add a default value? Add a name even tho not sending to server?  -->
+            </div>
+            <div>
+                <label for="author">Author:</label>
+                <input type="text" id="author">
+            </div>
+            <div>
+                <label for="pages">Number of Pages:</label>
+                <input type="text" id="pages">
+            </div>
+            <fieldset>
+                <legend>Has this book been read?</legend>
+                <div>
+                    <label for="read">Read:</label>
+                    <input type="radio" id="read" name="readStatus" value="read">
+                </div>
+                <div>
+                    <label for="unread">Unread:</label>
+                    <input type="radio" id="unread" name="readStatus" value="unread">
+                </div>
+            </fieldset>
+            <button type="button" id="submitBtn">Submit</button>
+            <button type="button" id="cancelBtn">Cancel</button>
+        </form>
     </dialog>
-    
+
     <script>
         const myLibrary = [];
 
@@ -53,17 +79,21 @@
             const main = document.querySelector(".main");
 
             const card = document.createElement('div');
-            card.classList.add("card");
+            card.classList.add('card');
             card.textContent = book.info();
             main.appendChild(card);
         });
 
         const dialog = document.querySelector('dialog');
-        const openDiaBtn = document.querySelector('#openDia');
-        const closeDiaBtn = document.querySelector('#closeDia');
+        const addBtn = document.querySelector('#addBtn');
+        const closeBtn = document.querySelector('#closeBtn');
 
-        openDiaBtn.addEventListener("click", () => {
+        addBtn.addEventListener('click', () => {
             dialog.showModal();
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            dialog.close();
         });
 
     </script>
