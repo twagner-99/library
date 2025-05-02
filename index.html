@@ -17,11 +17,11 @@
     <div class="footer grey-bck"></div>
 
     <dialog>
-        <form action=""> <!-- action=? method=dialog?? -->
+        <form action="">
             <p>Please fill out the following information to add a book to your library.</p>
             <div>
                 <label for="title">Title:</label>
-                <input type="text" id="title"> <!-- add a default value? Add a name even tho not sending to server?  -->
+                <input type="text" id="title">
             </div>
             <div>
                 <label for="author">Author:</label>
@@ -29,7 +29,7 @@
             </div>
             <div>
                 <label for="pages">Number of Pages:</label>
-                <input type="text" id="pages">
+                <input type="number" id="pages">
             </div>
             <fieldset>
                 <legend>Has this book been read?</legend>
@@ -71,7 +71,6 @@
             myLibrary.push(bookObj);
         }
 
-        
         const dialog = document.querySelector('dialog');
         const addBtn = document.querySelector('#addBtn');
         const submitBtn = document.querySelector('#submitBtn');
@@ -92,17 +91,21 @@
             addCard();
 
             clearInputs();
-        });
-        
-        cancelBtn.addEventListener('click', () => {
+
             dialog.close();
         });
-
+        
         function addCard() {
             const main = document.querySelector(".main");
             const card = document.createElement('div');
             card.classList.add('card');
             card.textContent = myLibrary[myLibrary.length - 1].info();
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.setAttribute('type', 'button');
+            deleteBtn.textContent = 'Delete';
+
+            card.appendChild(deleteBtn);
             main.appendChild(card);
         }
 
@@ -113,6 +116,10 @@
             document.querySelector('input[name="readStatus"]:checked').checked = false; // Note that I don't have to use querySelectorAll here because it's a radio button and only one can be checked at a time anyway //
         }
         
+        cancelBtn.addEventListener('click', () => {
+            dialog.close();
+        });
+
         </script>
 </body>
 </html>
