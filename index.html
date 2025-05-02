@@ -89,20 +89,29 @@
             
             addToLibrary(title, author, pages, readStatus);
 
-            // BUG - everytime I add a book, it does this again and adds multiple cards //
-            myLibrary.forEach((book) => {
-                const main = document.querySelector(".main");
-            
-                const card = document.createElement('div');
-                card.classList.add('card');
-                card.textContent = book.info();
-                main.appendChild(card);
-            });
+            addCard();
+
+            clearInputs();
         });
         
         cancelBtn.addEventListener('click', () => {
             dialog.close();
         });
+
+        function addCard() {
+            const main = document.querySelector(".main");
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.textContent = myLibrary[myLibrary.length - 1].info();
+            main.appendChild(card);
+        }
+
+        function clearInputs() {
+            document.querySelector('#title').value = '';
+            document.querySelector('#author').value = '';
+            document.querySelector('#pages').value = '';
+            document.querySelector('input[name="readStatus"]:checked').checked = false; // Note that I don't have to use querySelectorAll here because it's a radio button and only one can be checked at a time anyway //
+        }
         
         </script>
 </body>
