@@ -66,36 +66,44 @@
 
         // Should I define this stuff on the Book prototype to save memory?
 
-        function addToLibrary(title, author, pages, read) {
-            let bookObj = new Book(title, author, pages, read);
+        function addToLibrary(title, author, pages, readStatus) {
+            let bookObj = new Book(title, author, pages, readStatus);
             myLibrary.push(bookObj);
         }
 
-        addToLibrary('The Hobbit', 'J.R.R Tolkien', 295, 'not read yet');
-        addToLibrary('CrowBro', 'Caw Caw', 100, 'already read');
-        console.log(myLibrary);
-
-        myLibrary.forEach((book) => {
-            const main = document.querySelector(".main");
-
-            const card = document.createElement('div');
-            card.classList.add('card');
-            card.textContent = book.info();
-            main.appendChild(card);
-        });
-
+        
         const dialog = document.querySelector('dialog');
         const addBtn = document.querySelector('#addBtn');
-        const closeBtn = document.querySelector('#closeBtn');
-
+        const submitBtn = document.querySelector('#submitBtn');
+        const cancelBtn = document.querySelector('#cancelBtn');
+        
         addBtn.addEventListener('click', () => {
             dialog.showModal();
         });
+        
+        submitBtn.addEventListener("click", () => {
+            let title = document.querySelector('#title').value;
+            let author = document.querySelector('#author').value;
+            let pages = document.querySelector('#pages').value;
+            let readStatus = document.querySelector('input[name="readStatus"]:checked').value;
+            
+            addToLibrary(title, author, pages, readStatus);
 
+            // BUG - everytime I add a book, it does this again and adds multiple cards //
+            myLibrary.forEach((book) => {
+                const main = document.querySelector(".main");
+            
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.textContent = book.info();
+                main.appendChild(card);
+            });
+        });
+        
         cancelBtn.addEventListener('click', () => {
             dialog.close();
         });
-
-    </script>
+        
+        </script>
 </body>
 </html>
