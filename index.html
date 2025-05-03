@@ -102,7 +102,10 @@
             const card = document.createElement('div');
             card.classList.add('card');
             card.setAttribute('data-uuid', myLibrary[myLibrary.length - 1].uuid);
-            card.textContent = myLibrary[myLibrary.length - 1].info();
+            // card.textContent = myLibrary[myLibrary.length - 1].info();
+            
+            const bookInfo = document.createElement('p');
+            bookInfo.textContent = myLibrary[myLibrary.length - 1].info();
 
             const deleteBtn = document.createElement('button');
             deleteBtn.setAttribute('type', 'button');
@@ -112,6 +115,7 @@
             toggleReadBtn.setAttribute('type', 'button');
             toggleReadBtn.textContent = 'Toggle Read Status';
 
+            card.appendChild(bookInfo);
             card.appendChild(toggleReadBtn);
             card.appendChild(deleteBtn);
             main.appendChild(card);
@@ -139,6 +143,7 @@
                 myLibrary.forEach((book) => {
                     if (book.uuid === card.dataset.uuid) {
                         book.toggleRead();
+                        bookInfo.textContent = book.info();
                         console.log(book);
                     }
                 })
@@ -153,6 +158,8 @@
         }
         
         Book.prototype.toggleRead = function() {
+            this.readStatus = (this.readStatus === 'read') ? 'unread' : 'read';
+        
             // if (this.readStatus === 'read') {
             //     this.readStatus = 'unread';
             // }
@@ -160,9 +167,6 @@
             // else {
             //     this.readStatus = 'read';
             // }
-
-
-            this.readStatus = (this.readStatus === 'read') ? 'unread' : 'read';
         }
 
         cancelBtn.addEventListener('click', () => {
