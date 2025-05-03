@@ -93,12 +93,15 @@
             clearInputs();
 
             dialog.close();
+
+            console.log(myLibrary);
         });
         
         function addCard() {
             const main = document.querySelector(".main");
             const card = document.createElement('div');
             card.classList.add('card');
+            card.setAttribute('data-uuid', myLibrary[myLibrary.length - 1].uuid);
             card.textContent = myLibrary[myLibrary.length - 1].info();
 
             const deleteBtn = document.createElement('button');
@@ -107,6 +110,28 @@
 
             card.appendChild(deleteBtn);
             main.appendChild(card);
+
+            // By nesting the deleteBook function and deleteBtn event
+            // listener INSIDE the addCard function, we don't have to try to 
+            // delineate which card is which. Each card is it's little own self
+            // contained instance so we can delete it easier like this. If we
+            // didn't do this we would need to find a way to figure out which
+            // card we're deleting. 
+
+            // Note that this is how MDN also did it in their dynamic shopping 
+            // list example so I'm confident in my solution.
+
+            function deleteBook () {
+                myLibrary.forEach((book, index) => {
+                    if (book.uuid === card.dataset.uuid) {
+                        myLibrary.splice(index, 1)
+                    }
+                });
+
+                card.remove();
+            }
+
+            deleteBtn.addEventListener('click', deleteBook);
         }
 
         function clearInputs() {
@@ -119,7 +144,6 @@
         cancelBtn.addEventListener('click', () => {
             dialog.close();
         });
-
-        </script>
+    </script>
 </body>
 </html>
