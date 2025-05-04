@@ -60,7 +60,10 @@
             this.readStatus = readStatus;
             this.uuid = self.crypto.randomUUID();
             this.info = function() {
-                return `${this.title} by ${this.author}, ${this.pages} pages, ${this.readStatus}`
+                return `Title: ${this.title}
+                        Author: ${this.author}
+                        Page Count: ${this.pages}
+                        Status: ${this.readStatus}`;
             }
         }
 
@@ -103,13 +106,15 @@
         });
         
         function addCard() {
+            let currentBook = myLibrary[myLibrary.length - 1];
+
             const main = document.querySelector(".main");
             const card = document.createElement('div');
             card.classList.add('card');
-            card.setAttribute('data-uuid', myLibrary[myLibrary.length - 1].uuid);
+            card.setAttribute('data-uuid', currentBook.uuid);
             
             const bookInfo = document.createElement('p');
-            bookInfo.textContent = myLibrary[myLibrary.length - 1].info();
+            bookInfo.innerText = currentBook.info();
 
             const deleteBtn = document.createElement('button');
             deleteBtn.setAttribute('type', 'button');
