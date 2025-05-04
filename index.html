@@ -21,21 +21,21 @@
             <p>Please fill out the following information to add a book to your library.</p>
             <div>
                 <label for="title">Title:</label>
-                <input type="text" id="title">
+                <input type="text" id="title" required>
             </div>
             <div>
                 <label for="author">Author:</label>
-                <input type="text" id="author">
+                <input type="text" id="author" required>
             </div>
             <div>
                 <label for="pages">Number of Pages:</label>
-                <input type="number" id="pages">
+                <input type="number" id="pages" required>
             </div>
             <fieldset>
                 <legend>Has this book been read?</legend>
                 <div>
                     <label for="read">Read:</label>
-                    <input type="radio" id="read" name="readStatus" value="read">
+                    <input type="radio" id="read" name="readStatus" value="read" required>
                 </div>
                 <div>
                     <label for="unread">Unread:</label>
@@ -64,8 +64,6 @@
             }
         }
 
-        // Should I define this stuff on the Book prototype to save memory?
-
         function addToLibrary(title, author, pages, readStatus) {
             let bookObj = new Book(title, author, pages, readStatus);
             myLibrary.push(bookObj);
@@ -84,17 +82,24 @@
             let title = document.querySelector('#title').value;
             let author = document.querySelector('#author').value;
             let pages = document.querySelector('#pages').value;
-            let readStatus = document.querySelector('input[name="readStatus"]:checked').value;
+    
+            let readCheck = document.querySelectorAll('input[name="readStatus"]:indeterminate');
+
+            // This check is needed because the required attribute on the text
+            // inputs don't do anything when button type='button' because we
+            // aren't submitting the form. Also, if readCheck has any length to it, (length not equal to zero)
+            // that means there's indeterminate radio buttons (i.e. nothing selecting yet)
+            if (title === '' || author === '' || pages === '' || readCheck.length !== 0) {
+                alert('Please fill out all fields.');
+            }
             
-            addToLibrary(title, author, pages, readStatus);
-
-            addCard();
-
-            clearInputs();
-
-            dialog.close();
-
-            console.log(myLibrary);
+            else {
+                let readStatus = document.querySelector('input[name="readStatus"]:checked').value; // Need to get .value inside else. If trying to get .value outside else and no radio button has been checked yet, it doesn't work because there's nothing checked to find the value of.
+                addToLibrary(title, author, pages, readStatus);
+                addCard();
+                clearInputs();
+                dialog.close();
+            }
         });
         
         function addCard() {
@@ -102,7 +107,6 @@
             const card = document.createElement('div');
             card.classList.add('card');
             card.setAttribute('data-uuid', myLibrary[myLibrary.length - 1].uuid);
-            // card.textContent = myLibrary[myLibrary.length - 1].info();
             
             const bookInfo = document.createElement('p');
             bookInfo.textContent = myLibrary[myLibrary.length - 1].info();
@@ -144,7 +148,6 @@
                     if (book.uuid === card.dataset.uuid) {
                         book.toggleRead();
                         bookInfo.textContent = book.info();
-                        console.log(book);
                     }
                 })
             })
@@ -160,6 +163,10 @@
         Book.prototype.toggleRead = function() {
             this.readStatus = (this.readStatus === 'read') ? 'unread' : 'read';
         
+            // I'm using the ? ternary operator instead of the following if else.
+            // I think it makes a lot of sense here to use it as a toggle. 
+            // Less code, also easy to undestand.
+
             // if (this.readStatus === 'read') {
             //     this.readStatus = 'unread';
             // }
