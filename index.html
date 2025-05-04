@@ -96,7 +96,7 @@
                 alert('Please fill out all fields.');
             }
             
-            else {
+            else {                
                 let readStatus = document.querySelector('input[name="readStatus"]:checked').value; // Need to get .value inside else. If trying to get .value outside else and no radio button has been checked yet, it doesn't work because there's nothing checked to find the value of.
                 addToLibrary(title, author, pages, readStatus);
                 addCard();
@@ -152,7 +152,7 @@
                 myLibrary.forEach((book) => {
                     if (book.uuid === card.dataset.uuid) {
                         book.toggleRead();
-                        bookInfo.textContent = book.info();
+                        bookInfo.innerText = book.info();
                     }
                 })
             })
